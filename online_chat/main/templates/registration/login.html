@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{% static 'main/style.css' %}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<title>Онлайн-чат</title>
+</head>
+<body>
+	<header class="space-between display-flex">
+			<div class="display-flex">
+				<form action="{% url 'index' %}" method="get">
+					<button class="decor-none">
+					<div class="main-logo display-flex"><img src="{% static 'main/img/main-logo.jpg' %}" class="main-logo"></div>
+					<div class="header-title text-shadow display-flex"><h3>Онлайн-чат</h3></div>
+					</button>
+				</form>
+			</div>
+		    <div class="space-between display-flex">
+				{% if user.is_authenticated %}
+				<form action="{% url 'index' %}" method="get" >
+				<div class="display-flex"><button class="decor-none profile-button"><h3>{{ user }}</h3></button></div>
+				</form>
+				<form action="{% url 'logout' %}" method="get" >
+					<div class="display-flex"><button class="decor-none profile-button"><h3>Выйти</h3></button></div>
+				</form>
+				{% else %}
+				<form action="{% url 'register' %}" method="get" >
+					<div class="display-flex"><button onclick="location.href='/register'" class="decor-none profile-button "><h3>Регистрация</h3></button></div>
+				</form>
+				{% endif %}
+			</div>
+	</header>
+	<main>
+		<div class="begin-plate display-flex fdc jcc">
+
+
+		<div class="display-flex fdc">
+                <form action="{% url 'login' %}" method="post" class="display-flex fdc ">
+					{{ form }}
+					{% csrf_token %}
+					<button type="submit" class="btn btn-success" style="margin-top:10px">Подтвердить</button>
+				</form>
+				<form id="resetpass" action="{% url 'password_reset' %}" method="post" class="display-flex fdc" >
+					{% csrf_token %}
+					<button type="submit" class="btn btn-outline-danger " style="margin-top:10px">Забыли пароль</button>
+				</form>
+		</div>
+
+
+
+        </div>
+		<footer>
+			<div class="display-flex space-between">
+				<div><a class="footer-ref" href="https://sch1158.mskobr.ru/#/">ГБОУ Школа №1158</a><br><br>
+					Северное Чертаново ул., 809, Москва, 117648<br>
+				</div>
+				<div>Почта здесь</div>
+			</div>
+		</footer>
+	</main>
+</body>
+</html>
